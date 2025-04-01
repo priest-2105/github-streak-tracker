@@ -1,1 +1,1 @@
-# github-streak-tracker
+github-streak-tracker

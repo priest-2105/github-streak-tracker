@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ArrowLeft, Search, Flame } from "lucide-react"
+import { ArrowLeft, Search, Flame, Loader2, Github } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { fetchGithubStreak } from "@/lib/github"
@@ -15,6 +15,10 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
   const [showResults, setShowResults] = useState(false)
+  const [userData, setUserData] = useState<{
+    avatarUrl?: string
+    name?: string
+  } | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -75,12 +79,19 @@ export default function HomePage() {
                     className="absolute right-2 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-white"
                     disabled={loading}
                   >
-                    <Search className="h-5 w-5" />
+                    {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Search className="h-5 w-5" />}
                   </Button>
                 </div>
               </form>
 
               {error && <p className="text-red-400 mt-2">{error}</p>}
+
+              <div className="mt-8 text-center text-sm text-slate-400">
+                <p className="flex items-center justify-center gap-1">
+                  <Github className="h-4 w-4" />
+                  Enter any GitHub username to see their streak
+                </p>
+              </div>
             </motion.div>
           ) : (
             <motion.div
